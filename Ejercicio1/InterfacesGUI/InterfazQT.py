@@ -136,8 +136,8 @@ class PizzaGUI(QMainWindow):
 
         #guardar en el csv pizzas_existentes.csv
         with open('Ejercicio1/CSV/pizzas_existentes.csv', mode='a', newline='') as file:
-            writer = csv.writer(file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            writer.writerow([tipo_pizza, pizza.parts])
+            writer = csv.writer(file)
+            writer.writerow(tipo_pizza, pizza.parts)
 
         #resetear los campos
         self.masa_input.clear()
@@ -175,8 +175,8 @@ class PizzaGUI(QMainWindow):
 
         #guardar en el csv pizzas_personalizadas.csv
         with open('Ejercicio1/CSV/pizzas_personalizadas.csv', mode='a', newline='') as file:
-            writer = csv.writer(file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            writer.writerow([pizza_personalizada.parts])
+            writer = csv.writer(file)
+            writer.writerow(pizza_personalizada.parts)
 
         #resetear los campos
         self.masa_input.clear()
@@ -187,10 +187,13 @@ class PizzaGUI(QMainWindow):
         self.maridaje_input.clear()
         self.extras_input.clear()
 
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
+def start_app():
+    app = QApplication.instance()
+    if not app:
+        app = QApplication(sys.argv)
     gui = PizzaGUI()
     gui.show()
     sys.exit(app.exec_())
+
+
 
