@@ -3,21 +3,21 @@ from abc import ABC, abstractmethod
 from typing import List
 
 
-class Component(ABC):
+class MenuComponent(ABC):
 
     @property
-    def parent(self) -> Component:
+    def parent(self) -> MenuComponent:
         return self._parent
 
     @parent.setter
-    def parent(self, parent: Component):
+    def parent(self, parent: MenuComponent):
 
         self._parent = parent
 
-    def add(self, component: Component) -> None:
+    def add(self, component: MenuComponent) -> None:
         pass
 
-    def remove(self, component: Component) -> None:
+    def remove(self, component: MenuComponent) -> None:
         pass
 
     def is_composite(self) -> bool:
