@@ -59,7 +59,7 @@ class PizzaExistenteGUI:
         pizza_existente.list_parts()
 
         # Guardar la pizza existente en un CSV (puedes ajustar la ruta)
-        with open('Ejercicio2/CSV/pizzas_existentes.csv', mode='a', newline='') as file:
+        with open('Ejercicio1/CSV/pizzas_existentes.csv', mode='a', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(pizza_existente.parts)
 

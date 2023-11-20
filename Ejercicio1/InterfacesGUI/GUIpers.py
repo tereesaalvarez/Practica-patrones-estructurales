@@ -78,7 +78,7 @@ class PizzaPersonalizadaGUI:
         pizza_personalizada.list_parts()
 
         # Guardar la pizza personalizada en un CSV (puedes ajustar la ruta)
-        with open('Ejercicio2/CSV/pizzas_personalizadas.csv', mode='a', newline='') as file:
+        with open('Ejercicio1/CSV/pizzas_personalizadas.csv', mode='a', newline='') as file:
             writer = csv.writer(file)
             writer.writerow(pizza_personalizada.parts)
 
