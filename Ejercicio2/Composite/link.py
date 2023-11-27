@@ -1,8 +1,8 @@
 from Composite.leaf import *
 
 class Link(Leaf):
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, nombre):
+        self.nombre = nombre
         self.link = None
 
     def operation(self):

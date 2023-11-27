@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QLineEdit, QTreeWidget, QTreeWidgetItem, QMessageBox
+from PyQt5.QtWidgets import QApplication,QInputDialog, QWidget, QVBoxLayout, QPushButton, QLabel, QLineEdit, QTreeWidget, QTreeWidgetItem, QMessageBox
 from PyQt5.QtCore import Qt
 
 #importar todas las clases de las carpetas
@@ -79,7 +79,6 @@ class PaginaInicioSesion(QWidget):
 class PaginaPrincipal(QWidget):
     def __init__(self, usuario, parent=None):
         super().__init__(parent)
-
         self.setWindowTitle(f"Bienvenido, {usuario}")
         self.setGeometry(100, 100, 800, 600)
 
@@ -90,12 +89,99 @@ class PaginaPrincipal(QWidget):
         self.boton_desconectar = QPushButton("Desconectar")
 
         layout = QVBoxLayout()
+        layout.addWidget(QLabel("Estructura de documentos"))
         layout.addWidget(self.tree_widget)
         layout.addWidget(self.boton_modificar)
         layout.addWidget(self.boton_eliminar)
         layout.addWidget(self.boton_desconectar)
 
         self.setLayout(layout)
+
+        # Ejemplo de estructura de documentos
+        self.documento1 = Documento("Informe1", "Texto", 15)
+        self.documento2 = Documento("Foto1", "Imagen", 25)
+        self.link1 = Link("Enlace a Carpeta1")
+        self.carpeta1 = Carpeta("Carpeta1")
+        self.carpeta1.add(self.documento1)
+        self.carpeta1.add(self.documento2)
+        self.carpeta1.add(self.link1)
+        self.root_folder = Carpeta("Root")
+        self.root_folder.add(self.carpeta1)
+
+        # Rellenar el QTreeWidget con la estructura de documentos
+        self.populate_tree(self.root_folder)
+
+        # Conectar señales y slots
+        self.boton_modificar.clicked.connect(self.modificar_elemento)
+        self.boton_eliminar.clicked.connect(self.eliminar_elemento)
+        self.boton_desconectar.clicked.connect(self.desconectar_usuario)
+        self.tree_widget.itemClicked.connect(self.handle_tree_item_click)
+
+    def populate_tree(self, component, tree_item=None):
+        if tree_item is None:
+            tree_item = QTreeWidgetItem(self.tree_widget, [component.nombre])
+            tree_item.data = component
+
+        for child in component.get_children():
+            child_item = QTreeWidgetItem(tree_item, [child.nombre])
+            child_item.data = child
+            if isinstance(child, Carpeta):
+                self.populate_tree(child, child_item)
+            elif isinstance(child, Link):
+                linked_item = QTreeWidgetItem(child_item, [child.link])
+                linked_item.data = child.link
+
+    def handle_tree_item_click(self, item):
+        if hasattr(item, "data"):
+            component = item.data
+            QMessageBox.information(self, "Elemento Seleccionado", f"Elemento seleccionado: {component.nombre}")
+
+    def modificar_elemento(self):
+        selected_item = self.tree_widget.currentItem()
+        if selected_item and hasattr(selected_item, "data"):
+            component = selected_item.data
+            response = QMessageBox.question(
+                self, "Modificar Elemento",
+                "¿Qué desea realizar?",
+                QMessageBox.Yes | QMessageBox.No
+            )
+
+            if response == QMessageBox.Yes:
+                self.modificar_nombre_elemento(component)
+
+    def modificar_nombre_elemento(self, element):
+        nuevo_nombre, ok = QInputDialog.getText(self, "Modificar Nombre", "Nuevo nombre:")
+        if ok:
+            element.nombre = nuevo_nombre
+            self.populate_tree(self.root_folder)  # Actualizar la visualización
+
+    def eliminar_elemento(self):
+        selected_item = self.tree_widget.currentItem()
+        if selected_item and hasattr(selected_item, "data"):
+            component = selected_item.data
+            response = QMessageBox.question(
+                self, "Eliminar Elemento",
+                "¿Está seguro de que desea eliminar?",
+                QMessageBox.Yes | QMessageBox.No
+            )
+
+            if response == QMessageBox.Yes:
+                parent_item = selected_item.parent()
+                parent_component = parent_item.data if parent_item else self.root_folder
+                parent_component.remove(component)
+                self.populate_tree(self.root_folder)  # Actualizar la visualización
+                self.registrar_accion(f"Eliminado {component.nombre}")
+
+    def desconectar_usuario(self):
+        # Lógica para desconectar al usuario y cerrar la sesión
+        self.registrar_accion("Desconexión")
+        self.close()
+
+    def registrar_accion(self, accion,usuario):
+        # Lógica para registrar la acción en la base de datos registros.db
+        log_db = AccederDatabase()
+        log_db.logear(usuario, accion)
+        log_db.cerrar()
 
 class InterfazApp:
     def __init__(self):

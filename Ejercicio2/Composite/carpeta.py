@@ -39,3 +39,6 @@ class Carpeta(Component):
         for child in self._children:
             results.append(child.operation())
         return f"Branch({'+'.join(results)})"
+    
+    def get_children(self):
+        return self._children
