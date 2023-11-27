@@ -9,9 +9,10 @@ class UsuarioDatabase:
 
     def añadir_usuario(self, usuario):
         self.usuarios.append(usuario)
-
+    
     def encontrar_usuario(self, nombre_usuario, contraseña):
         for usuario in self.usuarios:
             if usuario.nombre_usuario == nombre_usuario and usuario.contraseña == contraseña:
                 return True
         return False
+    
