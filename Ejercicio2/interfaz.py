@@ -31,12 +31,7 @@ class PaginaInicio(QWidget):
         layout.addWidget(self.boton_login)
 
         self.setLayout(layout)
-        #self.boton_login.clicked.connect(self.mostrar_pagina_inicio_sesion)
-        self.nombre_de_usuario_actual = None
-
-        #self.delete_button.clicked.connect(self.eliminar_elemento)
-        #self.disconnect_button.clicked.connect(self.desconectar_usuario)
-
+        self.login_button.clicked.connect(self.iniciar_sesion)
 
 class PaginaRegistro(QWidget):
     def __init__(self, parent=None):
@@ -176,23 +171,18 @@ class PaginaPrincipal(QWidget):
                 parent_component = parent_item.data if parent_item else self.root_folder
                 parent_component.remove(component)
                 self.populate_tree(self.root_folder)  # Actualizar la visualización
-                accion = f"Eliminado {component.nombre}"
-                self.registrar_accion(accion)
+                self.registrar_accion(f"Eliminado {component.nombre} ")
 
     def desconectar_usuario(self):
         # Lógica para desconectar al usuario y cerrar la sesión
         self.registrar_accion("Desconexión")
         self.close()
 
-    def registrar_accion(self, accion):
-    # Lógica para registrar la acción en la base de datos registros.db
-        if self.usuario_actual:
-            log_db = AccederDatabase()
-            log_db.logear(self.usuario_actual, accion)
-            log_db.cerrar()
-        else:
-            print("Usuario no encontrado al registrar la acción")  
-
+    def registrar_accion(self, accion, usuario):
+        # Lógica para registrar la acción en la base de datos registros.db
+        log_db = AccederDatabase()
+        log_db.logear(usuario, accion)
+        log_db.cerrar()
 
 class InterfazApp:
     def __init__(self):
@@ -240,22 +230,20 @@ class InterfazApp:
         self.pagina_inicio_sesion.show()
 
     def iniciar_sesion(self):
-        nombre_usuario = self.user_input.text()
-        contraseña = self.password_input.text()
+        nombre_usuario = self.pagina_inicio_sesion.input_usuario.text()
+        contraseña = self.pagina_inicio_sesion.input_contraseña.text()
 
-        db = AccederDatabase()
-        usuario_valido = db.encontrar_usuario(nombre_usuario, contraseña)
-
-        if usuario_valido:
-            # Obtener el nombre de usuario al iniciar sesión
-            self.nombre_de_usuario_actual = db.obtener_nombre_usuario(nombre_usuario, contraseña)
-            self.show_main_page()
+        # Verificar el usuario en la base de datos
+        if self.usuario_db.encontrar_usuario(nombre_usuario, contraseña):
+            self.usuario_actual = nombre_usuario
+            self.pagina_inicio_sesion.close()
+            self.mostrar_pagina_principal()
         else:
             QMessageBox.warning(self, "Error de inicio de sesión", "Usuario o contraseña incorrectos")
 
         db.cerrar()
 
-
+        
     def mostrar_pagina_principal(self):
         self.pagina_principal = PaginaPrincipal(self.usuario_actual)
         self.pagina_principal.boton_desconectar.clicked.connect(self.desconectar_usuario)

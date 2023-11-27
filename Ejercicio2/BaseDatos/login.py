@@ -25,12 +25,4 @@ class AccederDatabase:
     def cerrar(self):
         self.connection.cerrar()
 
-    def obtener_nombre_usuario(self, nombre_usuario, contraseña):
-        self.cursor.execute('''
-            SELECT nombre_usuario FROM usuarios_log
-            WHERE nombre_usuario = ? AND contraseña = ?
-        ''', (nombre_usuario, contraseña))
-        result = self.cursor.fetchone()
-        return result[0] if result else None
-
     
