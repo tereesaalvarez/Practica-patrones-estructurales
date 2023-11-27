@@ -121,7 +121,7 @@ class InterfazApp:
         contraseña = self.pagina_registro.input_contraseña.text()
 
         # Verificar que no exista el usuario
-        if self.usuario_db.encontrar_usuario(nombre_usuario):
+        if self.usuario_db.encontrar_usuario(nombre_usuario, contraseña):
             QMessageBox.warning(self.pagina_registro, "Error", "El usuario ya existe. Por favor, elige otro.")
             return
 
