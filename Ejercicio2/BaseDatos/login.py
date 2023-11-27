@@ -3,7 +3,7 @@ from datetime import datetime
 
 class AccederDatabase:
     def __init__(self):
-        self.connection = sqlite3.connect('basedatos.db')
+        self.connection = sqlite3.connect('Ejercicio2/BaseDatos/basedatos.db')
         self.cursor = self.connection.cursor()
         self.cursor.execute('''
             CREATE TABLE IF NOT EXISTS usuarios_log (
@@ -22,7 +22,7 @@ class AccederDatabase:
         ''', (usuario, contraseña, fecha))
         self.connection.commit()
 
-    def close(self):
-        self.connection.close()
+    def cerrar(self):
+        self.connection.cerrar()
 
     
