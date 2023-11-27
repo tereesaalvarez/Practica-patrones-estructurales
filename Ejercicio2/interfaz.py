@@ -31,7 +31,6 @@ class PaginaInicio(QWidget):
         layout.addWidget(self.boton_login)
 
         self.setLayout(layout)
-        self.login_button.clicked.connect(self.iniciar_sesion)
 
 class PaginaRegistro(QWidget):
     def __init__(self, parent=None):
@@ -171,14 +170,14 @@ class PaginaPrincipal(QWidget):
                 parent_component = parent_item.data if parent_item else self.root_folder
                 parent_component.remove(component)
                 self.populate_tree(self.root_folder)  # Actualizar la visualización
-                self.registrar_accion(f"Eliminado {component.nombre} ")
+                self.registrar_accion(f"Eliminado {component.nombre}")
 
     def desconectar_usuario(self):
         # Lógica para desconectar al usuario y cerrar la sesión
         self.registrar_accion("Desconexión")
         self.close()
 
-    def registrar_accion(self, accion, usuario):
+    def registrar_accion(self, accion,usuario):
         # Lógica para registrar la acción en la base de datos registros.db
         log_db = AccederDatabase()
         log_db.logear(usuario, accion)
@@ -239,11 +238,8 @@ class InterfazApp:
             self.pagina_inicio_sesion.close()
             self.mostrar_pagina_principal()
         else:
-            QMessageBox.warning(self, "Error de inicio de sesión", "Usuario o contraseña incorrectos")
+            QMessageBox.warning(self.pagina_inicio_sesion, "Error", "Usuario o contraseña incorrectos.")
 
-        db.cerrar()
-
-        
     def mostrar_pagina_principal(self):
         self.pagina_principal = PaginaPrincipal(self.usuario_actual)
         self.pagina_principal.boton_desconectar.clicked.connect(self.desconectar_usuario)
