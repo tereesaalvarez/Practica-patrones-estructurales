@@ -1,13 +1,14 @@
 from component import *
 
-class Composite(Component):
+class Carpeta(Component):
     """
     The Composite class represents the complex components that may have
     children. Usually, the Composite objects delegate the actual work to their
     children and then "sum-up" the result.
     """
 
-    def __init__(self) -> None:
+    def __init__(self, nombre) -> None:
+        self.nombre = nombre
         self._children: List[Component] = []
 
     """
