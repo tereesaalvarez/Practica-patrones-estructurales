@@ -142,7 +142,7 @@ class PaginaPrincipal(QWidget):
             component = selected_item.data
             response = QMessageBox.question(
                 self, "Modificar Elemento",
-                "¿Qué desea realizar?",
+                "¿Desea renombrarlo?",
                 QMessageBox.Yes | QMessageBox.No
             )
 
