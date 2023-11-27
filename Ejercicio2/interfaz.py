@@ -193,10 +193,7 @@ class InterfazApp:
     def mostrar_pagina_inicio(self):
         self.pagina_inicio = PaginaInicio()
         self.pagina_inicio.boton_registro.clicked.connect(self.mostrar_pagina_registro)
-
-        # Conecta directamente el botón de iniciar sesión al método correspondiente
-        self.pagina_inicio.boton_login.clicked.connect(self.iniciar_sesion)
-
+        self.pagina_inicio.boton_login.clicked.connect(self.mostrar_pagina_inicio_sesion)
         self.pagina_inicio.show()
         self.app.exec_()
 
@@ -208,17 +205,14 @@ class InterfazApp:
     def registrar_usuario(self):
         nombre_usuario = self.pagina_registro.input_usuario.text()
         contraseña = self.pagina_registro.input_contraseña.text()
-
         # Verificar que no exista el usuario
         if self.usuario_db.encontrar_usuario(nombre_usuario, contraseña):
             QMessageBox.warning(self.pagina_registro, "Error", "El usuario ya existe. Por favor, elige otro.")
             return
-
         # Añadir el usuario a la base de datos
         nuevo_usuario = Usuario(nombre_usuario, contraseña)
         self.usuario_db.añadir_usuario(nuevo_usuario)
         self.login_db.logear(nombre_usuario, contraseña)
-
         # Volver a la página de inicio
         self.pagina_registro.close()
         self.mostrar_pagina_inicio()
@@ -231,7 +225,6 @@ class InterfazApp:
     def iniciar_sesion(self):
         nombre_usuario = self.pagina_inicio_sesion.input_usuario.text()
         contraseña = self.pagina_inicio_sesion.input_contraseña.text()
-
         # Verificar el usuario en la base de datos
         if self.usuario_db.encontrar_usuario(nombre_usuario, contraseña):
             self.usuario_actual = nombre_usuario
@@ -245,13 +238,12 @@ class InterfazApp:
         self.pagina_principal.boton_desconectar.clicked.connect(self.desconectar_usuario)
         self.pagina_principal.show()
         self.app.exec_()
-
     def desconectar_usuario(self):
         # Lógica para desconectar al usuario y cerrar la sesión
         self.usuario_actual = None
         self.pagina_principal.close()
         self.mostrar_pagina_inicio()
-
+        
 if __name__ == "__main__":
     app_interfaz = InterfazApp()
     app_interfaz.mostrar_pagina_inicio()
