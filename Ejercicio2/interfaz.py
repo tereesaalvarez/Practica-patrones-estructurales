@@ -174,7 +174,8 @@ class PaginaPrincipal(QWidget):
 
     def desconectar_usuario(self):
         # Lógica para desconectar al usuario y cerrar la sesión
-        self.registrar_accion("Desconexión")
+        usuario = self.usuario
+        self.registrar_accion("Desconexión",usuario)
         self.close()
 
     def registrar_accion(self, accion,usuario):
@@ -243,7 +244,7 @@ class InterfazApp:
         self.usuario_actual = None
         self.pagina_principal.close()
         self.mostrar_pagina_inicio()
-        
+
 if __name__ == "__main__":
     app_interfaz = InterfazApp()
     app_interfaz.mostrar_pagina_inicio()
