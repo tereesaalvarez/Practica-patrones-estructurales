@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from subject import *
+from Proxy.subject import *
 
 class Proxy(Subject):
     """

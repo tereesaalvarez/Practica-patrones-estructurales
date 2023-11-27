@@ -1,4 +1,4 @@
-from component import *
+from Composite.component import *
 
 class Leaf(Component):
     """

@@ -1,4 +1,4 @@
-from leaf import *
+from Composite.leaf import *
 
 class Link(Leaf):
     def __init__(self, name):

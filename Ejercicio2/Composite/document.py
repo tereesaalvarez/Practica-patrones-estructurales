@@ -1,4 +1,4 @@
-from leaf import *
+from Composite.leaf import *
 
 class Documento(Leaf):
     def __init__(self, nombre, tipo, tamaño):
