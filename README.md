@@ -1,16 +1,78 @@
 # Practica-patrones-estructurales
 
-crear menu (combos)
+# Ejercicio 1 - Pizzeria Delizioso
 
-no hay que hacer builder para el menu pq peta
+# Clases y Módulos
 
-se reciclan las bebidas(madridaje)
+### PizzaBuilder
+- `PizzaBuilder`: Interfaz base para constructores de pizzas con métodos abstractos.
+- `Director`: Clase que utiliza un `PizzaBuilder` para construir pizzas completas.
 
-hay que actualizar a poder pedir postres con la pizza y aparte los combos
+### Pizzas Concretas
+- Clases que implementan constructores concretos de pizzas: `BarbacoaBuilder`, `CuatroQuesosBuilder`, `HawaianaBuilder`, `JamonyQuesoBuilder`, `MargaritaBuilder`, `VegetarianaBuilder`, `PersonalizadaBuilder`.
 
-generar un id para cada elemento ( cada ingrediente...)
+### PizzaComposite
+- `Component`: Interfaz base para `Leaf` y `Composite`.
+- `Leaf`: Clase que representa elementos individuales (pizzas individuales).
+- `Composite`: Clase que representa composiciones de elementos (menús).
 
-podemos usar bases de datos(relacionales(sql)) 
+### Menú
+- `Menu`: Clase que representa un menú especializado que puede contener pizzas individuales o menús compuestos.
+
+### CSVHandler
+- Funciones para guardar y cargar datos desde y hacia archivos CSV (`save_to_csv`, `read_from_csv`).
+- Funciones específicas para manejar datos de pizzas y menús (`save_pizzas_to_csv`, `load_pizzas_from_csv`, `save_menus_to_csv`, `load_menus_from_csv`).
+
+### Interfaz Gráfica (GUI)
+- Clases para la interfaz gráfica con PyQt5 (`PantallaPrincipal`, `PaginaPizza`, `PaginaPersonalizada`, `PaginaMenu`).
+
+## Funcionalidades Clave
+
+### PizzaBuilder
+- Utiliza el patrón Builder para construir pizzas de manera modular.
+- Cada pizza concreta tiene su propio constructor que implementa los pasos específicos de la construcción.
+
+### PizzaComposite
+- Utiliza el patrón Composite para representar tanto pizzas individuales como menús compuestos.
+- Proporciona una estructura jerárquica para organizar pizzas y menús.
+
+### CSVHandler
+- Gestiona la lectura y escritura de datos desde y hacia archivos CSV.
+- Especializado en manejar datos relacionados con pizzas y menús.
+
+### Interfaz Gráfica
+- Desarrollada con PyQt5 para permitir a los usuarios interactuar con el sistema.
+- Proporciona opciones para hacer pedidos de pizzas, personalizar pizzas y pedir menús.
+
+## Flujo de la Aplicación
+
+1. **Inicio de la Aplicación:**
+   - Se crea una instancia de `PantallaPrincipal`.
+   - Se muestra la página principal con opciones para hacer pedidos y personalizaciones.
+
+2. **Pedido de Pizzas:**
+   - El usuario puede seleccionar pizzas predefinidas (Barbacoa, Cuatro Quesos, etc.).
+   - Se utiliza un `Director` para construir la pizza seleccionada.
+   - Se añade la pizza al carrito.
+
+3. **Personalización de Pizzas:**
+   - El usuario puede personalizar su propia pizza.
+   - Se utiliza el `PersonalizadaBuilder` para construir la pizza personalizada.
+   - Se añade la pizza personalizada al carrito.
+
+4. **Pedido de Menús:**
+   - El usuario puede seleccionar menús predefinidos o compilar su propio menú.
+   - Se utiliza el patrón Composite para construir el menú seleccionado.
+   - Se añade el menú al carrito.
+
+5. **Confirmación y Pago:**
+   - El usuario revisa su carrito, confirma el pedido y realiza el pago.
+
+## DiagramaUML
+
+![UML]()
+
+
 
 
 # Ejercicio 2 - Sistema de Gestión de Documentos
@@ -108,5 +170,5 @@ podemos usar bases de datos(relacionales(sql))
 ## Diagrama UML
 Se ha generado un diagrama UML para proporcionar una visualización clara de la estructura y relaciones entre clases y módulos.
 
-![UML](https://github.com/tereesaalvarez/Practica-patrones-estructurales/blob/main/Ejercicio2/UML/umlbien.png?raw=true)
+![UML]()
 
