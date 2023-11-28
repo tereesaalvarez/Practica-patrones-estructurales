@@ -1,24 +1,14 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QPushButton
-from PizzaBuilder.personalizada import PersonalizadaBuilder
-from CSVHandler.csv_handler import save_to_csv
+# Ejercicio1/InterfacesGUI/pagina_personalizada.py
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
 
 class PaginaPersonalizada(QWidget):
-    def __init__(self, pizza_name):
+    def __init__(self, pizzas_personalizadas):
         super().__init__()
 
-        self.layout = QVBoxLayout(self)
+        # Lógica para mostrar las pizzas personalizadas
+        layout = QVBoxLayout()
+        for pizza in pizzas_personalizadas:
+            label = QLabel(f"Ingredientes: {', '.join(pizza.parts)}, Precio: {pizza.get_price()}")
+            layout.addWidget(label)
 
-        self.builder = PersonalizadaBuilder()
-        self.builder.producir_masa()
-        self.builder.producir_salsa()
-        # ... (continuar con otras llamadas a métodos del builder)
-
-        self.finish_button = QPushButton("Finalizar Pedido", self)
-        self.finish_button.clicked.connect(self.save_to_csv)
-
-        self.layout.addWidget(self.finish_button)
-
-    def save_to_csv(self):
-        pizza_data = self.builder.pizza.list_parts()
-        save_to_csv("Ejercicio1/CSV/pizzas_personalizadas.csv", [pizza_data], header=['Pizza'])
-        # ... (otras operaciones, por ejemplo, calcular precio)
+        self.setLayout(layout)

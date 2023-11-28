@@ -2,12 +2,23 @@ from __future__ import annotations
 from typing import Any
 from PizzaBuilder.Builder import PizzaBuilder
 from abc import ABC, abstractmethod
+from CSVHandler.csv_handler import *
 
 
 class PersonalizadaBuilder(PizzaBuilder):
 
     def __init__(self) -> None:
         self.reset()
+
+    def cargar_desde_csv(self, file_path: str) -> None:
+        # Lógica para cargar datos desde el archivo CSV
+        data = read_from_csv(file_path)
+        
+        # Asignar datos a las propiedades de la pizza personalizada
+        for row in data:
+            ingrediente = row[0]
+            valor = row[1]
+            self._pizza.add(f'{ingrediente}: {valor}')
 
     def reset(self) -> None:
         self._pizza = Personalizada()
