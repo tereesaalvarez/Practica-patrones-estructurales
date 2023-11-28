@@ -24,6 +24,8 @@ class Principal(QMainWindow):
         self.layout.addWidget(self.customize_button)
         self.layout.addWidget(self.menu_button)
 
+        #intancias de
+
     def show_pizza_page(self):
         self.central_widget.setCurrentIndex(0)
 
