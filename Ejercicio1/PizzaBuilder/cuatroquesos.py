@@ -2,10 +2,13 @@ from __future__ import annotations
 from typing import Any
 from PizzaBuilder.Builder import PizzaBuilder
 from abc import ABC, abstractmethod
+from PizzaComposite.leaf import * 
+
 
 class CuatroQuesosBuilder(PizzaBuilder):
 
     def __init__(self) -> None:
+        super().__init__('Pizza Cuatro Quesos', 10)
         self.reset()
 
     def reset(self) -> None:
@@ -42,13 +45,14 @@ class CuatroQuesosBuilder(PizzaBuilder):
         self._pizza.add('nuez picada')
 
 
-class Cuatroquesos():
+class Cuatroquesos(Leaf):
 
     def __init__(self) -> None:
+        super().__init__('Pizza Cuatro Quesos', 10.0)
         self.parts = []
 
     def add(self, part: Any) -> None:
         self.parts.append(part)
 
-    def list_parts(self) -> None:
-        print(f"Pizza parts: {', '.join(self.parts)}", end="")
+    def display(self) -> None:
+        print(f"Pizza: {', '.join(self.parts)}", end="")
