@@ -8,21 +8,23 @@ class PantallaPrincipal(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.pizzas_existentes = []  # Lista para almacenar pizzas existentes
-        self.pizzas_personalizadas = []  # Lista para almacenar pizzas personalizadas
-        self.menus = []  # Lista para almacenar menús
+        self.pizzas_existentes = []
+        self.pizzas_personalizadas = []
+        self.menus = []
 
-        # Crear botones para cada opción
+        # Asegúrate de hacer que las instancias de las páginas sean atributos de la clase
+        self.pagina_pizza = PaginaPizza(self.pizzas_existentes)
+        self.pagina_personalizada = PaginaPersonalizada(self.pizzas_personalizadas)
+        self.pagina_menu = PaginaMenu(self.menus)
+
         btn_pizza = QPushButton('Hacer Pedido de Pizza', self)
         btn_personalizada = QPushButton('Personalizar Pizza', self)
         btn_menu = QPushButton('Pedir Menú', self)
 
-        # Conectar botones a las páginas correspondientes
         btn_pizza.clicked.connect(self.mostrar_pagina_pizza)
         btn_personalizada.clicked.connect(self.mostrar_pagina_personalizada)
         btn_menu.clicked.connect(self.mostrar_pagina_menu)
 
-        # Diseño de la pantalla principal
         layout = QVBoxLayout()
         layout.addWidget(btn_pizza)
         layout.addWidget(btn_personalizada)
@@ -33,16 +35,10 @@ class PantallaPrincipal(QMainWindow):
         self.setCentralWidget(central_widget)
 
     def mostrar_pagina_pizza(self):
-        # Lógica para mostrar la página de hacer pedido de pizza
-        pagina_pizza = PaginaPizza(self.pizzas_existentes)
-        pagina_pizza.show()
+        self.pagina_pizza.show()
 
     def mostrar_pagina_personalizada(self):
-        # Lógica para mostrar la página de personalizar pizza
-        pagina_personalizada = PaginaPersonalizada(self.pizzas_personalizadas)
-        pagina_personalizada.show()
+        self.pagina_personalizada.show()
 
     def mostrar_pagina_menu(self):
-        # Lógica para mostrar la página de pedir menú
-        pagina_menu = PaginaMenu(self.menus)
-        pagina_menu.show()
+        self.pagina_menu.show()
