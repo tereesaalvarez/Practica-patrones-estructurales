@@ -1,6 +1,7 @@
 from __future__ import annotations
 from typing import Any
 from PizzaBuilder.Builder import PizzaBuilder
+from PizzaComposite.menu import *
 from abc import ABC, abstractmethod
 
 class Director:
@@ -25,3 +26,9 @@ class Director:
         self.builder.producir_maridaje()
         self.builder.producir_extras()
 
+    def build_full_featured_menu(self) -> Composite:
+        menu = Menu("Full Featured Menu")
+        pizza = self.build_full_featured_product()
+        menu.add(pizza)
+        # Agregar entradas, bebidas y postres al menú según sea necesario
+        return menu
