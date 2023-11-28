@@ -1,5 +1,7 @@
 # Practica-patrones-estructurales
 
+Aquí tienes el [link](https://github.com/tereesaalvarez/Practica-patrones-estructurales.git) al repositorio
+
 # Ejercicio 1 - Pizzeria Delizioso
 
 # Clases y Módulos
@@ -70,7 +72,7 @@
 
 ## DiagramaUML
 
-![UML]()
+![UML](https://github.com/tereesaalvarez/Practica-patrones-estructurales/blob/main/Ejercicio1/UML/Ej1completo2.png?raw=true)
 
 
 
@@ -170,5 +172,5 @@
 ## Diagrama UML
 Se ha generado un diagrama UML para proporcionar una visualización clara de la estructura y relaciones entre clases y módulos.
 
-![UML]()
+![UML](https://github.com/tereesaalvarez/Practica-patrones-estructurales/blob/main/Ejercicio2/UML/umlbien.png?raw=true)
 
